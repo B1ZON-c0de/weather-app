@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/weather-icons/2.0.12/css/weather-icons.min.css"
+      integrity="sha512-r/Gan7PMSRovDus++vDS2Ayutc/cSdl268u047n4z+k7GYuR7Hiw71FsT3QQxdKJBVHYttOJ6IGLnlM9IoMToQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+      integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Weather App</title>
+    <script type="module" crossorigin src="/weather-app/assets/index-CPsYnHUv.js"></script>
+    <link rel="stylesheet" crossorigin href="/weather-app/assets/index-OmzRZViu.css">
+  </head>
+  <body class="px-8 lg:px-80">
+    <div
+      id="loader"
+      class="fixed hidden w-full h-full top-0 left-0 z-99 backdrop-blur-3xl"
+    >
+      <div
+        class="absolute top-1/2 left-1/2 -translate-1/2 transition-all duration-300"
+      >
+        <svg
+          class="w-25 h-25"
+          version="1.1"
+          id="L7"
+          xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+          x="0px"
+          y="0px"
+          viewBox="0 0 100 100"
+          enable-background="new 0 0 100 100"
+          xml:space="preserve"
+        >
+          <path
+            fill="#fff"
+            d="M31.6,3.5C5.9,13.6-6.6,42.7,3.5,68.4c10.1,25.7,39.2,38.3,64.9,28.1l-3.1-7.9c-21.3,8.4-45.4-2-53.8-23.3
+  c-8.4-21.3,2-45.4,23.3-53.8L31.6,3.5z"
+          >
+            <animateTransform
+              attributeName="transform"
+              attributeType="XML"
+              type="rotate"
+              dur="2s"
+              from="0 50 50"
+              to="360 50 50"
+              repeatCount="indefinite"
+            />
+          </path>
+          <path
+            fill="#fff"
+            d="M42.3,39.6c5.7-4.3,13.9-3.1,18.1,2.7c4.3,5.7,3.1,13.9-2.7,18.1l4.1,5.5c8.8-6.5,10.6-19,4.1-27.7
+  c-6.5-8.8-19-10.6-27.7-4.1L42.3,39.6z"
+          >
+            <animateTransform
+              attributeName="transform"
+              attributeType="XML"
+              type="rotate"
+              dur="1s"
+              from="0 50 50"
+              to="-360 50 50"
+              repeatCount="indefinite"
+            />
+          </path>
+          <path
+            fill="#fff"
+            d="M82,35.7C74.1,18,53.4,10.1,35.7,18S10.1,46.6,18,64.3l7.6-3.4c-6-13.5,0-29.3,13.5-35.3s29.3,0,35.3,13.5
+  L82,35.7z"
+          >
+            <animateTransform
+              attributeName="transform"
+              attributeType="XML"
+              type="rotate"
+              dur="2s"
+              from="0 50 50"
+              to="360 50 50"
+              repeatCount="indefinite"
+            />
+          </path>
+        </svg>
+      </div>
+    </div>
+
+    <i
+      id="burger"
+      class="fa-solid fa-bars absolute top-4 z-11 left-4 text-3xl cursor-pointer"
+    ></i>
+    <div
+      id="change"
+      class="absolute w-full backdrop-blur-lg h-0 top-0 left-0 duration-300 shadow-xl overflow-y-scroll flex flex-col items-center justify-center gap-2"
+    >
+      <h1 class="text-xl font-bold">Ведите название города:</h1>
+      <input
+        id="search"
+        type="text"
+        class="border-2 p-2 placeholder:italic bg-white/50"
+        placeholder="Например: Москва"
+      />
+      <button
+        id="btn"
+        type="submit"
+        class="border-2 border-black rounded-lg p-2 active:bg-black bg-white/50 active:text-white duration-300 cursor-pointer"
+      >
+        Изменить
+      </button>
+    </div>
+    <div id="arrowHint" class="lg:-ml-65 ml-5 mt-1 absolute -z-1">
+      <i class="fa-solid fa-arrow-left mr-2 animate-arrow"></i>Выберите город
+      нажав сюда
+    </div>
+    <div class="mt-4 flex flex-col justify-center items-center gap-3">
+      <h1 id="cityName" class="text-bold text-3xl text-center"></h1>
+      <p
+        id="dayDate"
+        class="text-center font-semibold rounded-full bg-black w-fit py-1 px-2 hidden"
+      ></p>
+      <p id="weatherInStreet" class="font-semibold"></p>
+    </div>
+    <div
+      id="weatherTemp"
+      class="text-[10rem] text-center md:float-right md:text-[20rem]"
+    ></div>
+    <div id="summary"></div>
+    <div
+      id="params"
+      class="bg-black mt-6 p-5 rounded-lg flex justify-between 2xl:max-w-100 hidden"
+    >
+      <div
+        id="windParam"
+        class="flex flex-col gap-1 justify-center items-center"
+      >
+        <i class="fa-solid fa-wind text-4xl mb-2"></i>
+        <h3 id="windSpeed" class="font-semibold"></h3>
+        <p class="text-sm">Ветер</p>
+      </div>
+      <div
+        id="waterParam"
+        class="flex flex-col gap-1 justify-center items-center"
+      >
+        <i class="fa-solid fa-droplet text-4xl mb-2"></i>
+        <h3 id="humidityPer" class="font-semibold"></h3>
+        <p class="text-sm">Влажность</p>
+      </div>
+      <div
+        id="eyeParam"
+        class="flex flex-col gap-1 justify-center items-center"
+      >
+        <i class="fa-solid fa-eye text-4xl mb-2"></i>
+        <h3 id="visibility" class="font-semibold"></h3>
+        <p class="text-sm">Видимость</p>
+      </div>
+    </div>
+    <div class="">
+      <h1 id="weekText" class="hidden font-bold text-xl mt-6">
+        Погода на ближайшие дни
+      </h1>
+      <div
+        id="weekWeather"
+        class="mt-3 flex justify-between lg:justify-start lg:gap-2"
+      ></div>
+    </div>
+  </body>
+</html>
